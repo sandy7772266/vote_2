@@ -12,7 +12,7 @@
 */
 Route::get('/', ['as' => 'home', 'uses' => 'VoteController@index']);
 //Route::get('/', ['as' => 'home']);
-Route::get('vote/edit/{id}', array('as' => 'vote.edit', function($id) 
+Route::get('/{id}', array('as' => 'vote.edit', function($id) 
     {
         // return our view and Vote information
         return View::make('tasks.vote-edit') // pulls app/views/nerd-edit.blade.php

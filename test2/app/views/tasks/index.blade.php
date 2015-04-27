@@ -14,7 +14,7 @@
 				
 
 
-				<a href="{{ url('vote/edit', array($vote->id), false) }}"><strong>{{ $vote->vote_title }}</strong></a>
+				<a href="{{ url('/', array($vote->id), false) }}"><strong>{{ $vote->vote_title }}</strong></a>
 				<!-- {{Form::model($vote,array('route'=>array('votes.update',$vote->id)))}}			
 
 				{{Form::text('vote_title')}}
