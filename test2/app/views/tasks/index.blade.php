@@ -14,7 +14,15 @@
 				
 
 
-				<a href="{{ url('/', array($vote->id), false) }}"><strong>{{ $vote->vote_title }}</strong></a>
+				
+
+<!-- 				{{ Form::open(['url' => 'votes', 'class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}
+ -->			{{ Form::open(['class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}
+				<a href="{{ url('/', array($vote->id), false) }}"><strong>{{ $vote->vote_title }}</strong></a>	                                               
+                {{ Form::submit('Delete Me!')}}
+				{{ Form::close() }}
+
+
 				<!-- {{Form::model($vote,array('route'=>array('votes.update',$vote->id)))}}			
 
 				{{Form::text('vote_title')}}

@@ -92,7 +92,7 @@ class VoteController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return 'hello';
 	}
 
 
@@ -142,7 +142,8 @@ class VoteController extends \BaseController {
 						'msg' => '更新成功！']
 		];
 
-		return Redirect::to('/');
+		//return Redirect::to('/');
+		return Redirect::route('home');
 	}
     //修改部分 end
 
@@ -155,6 +156,15 @@ class VoteController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+		$vote = Vote::find($id);
+		$vote->delete();
+
+		$arr = [
+			'flash' => ['type' => 'success',
+						'msg' => '待辦事項已刪除！']
+		];
+
+		return Redirect::route('home');
 	}
 
 

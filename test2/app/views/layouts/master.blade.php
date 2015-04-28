@@ -24,7 +24,7 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="http://10.231.87.225:81/new_vote/test2/public/">All Votes</a></li>
+						<li class="active"><a href="37/8">All Votes</a></li>
 					</ul>
 				</div>
 			</div>

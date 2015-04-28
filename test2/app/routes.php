@@ -19,6 +19,15 @@ Route::get('/{id}', array('as' => 'vote.edit', function($id)
             ->with('vote', Vote::find($id));
     }));
 
+Route::get('/{id}/{s}', array('as' => 'vote.edit2', function($id,$s) 
+    {
+        // return our view and Vote information
+        // return View::make('tasks.vote-edit') // pulls app/views/nerd-edit.blade.php
+        //     ->with('vote', Vote::find($id));
+
+         return View::make('tasks.vote-edit2', array('id' => $id,'s'=>$s,'vote'=>Vote::find($id)));
+    }));
+
 
 Route::delete('/api/todos/clean', 'TodoController@clean');
 Route::resource('/api/todos', 'TodoController');
