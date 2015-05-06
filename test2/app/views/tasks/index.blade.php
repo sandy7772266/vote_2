@@ -19,7 +19,7 @@
 <!-- 				{{ Form::open(['url' => 'votes', 'class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}
  -->			{{ Form::open(['class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}
 				<a href="{{ url('/', array($vote->id), false) }}"><strong>{{ $vote->vote_title }}</strong></a>	                                               
-                {{ Form::submit('Delete Me!')}}
+                {{ Form::submit('刪除',['class'=>'btn btn-default btn-xs'])}}
 				{{ Form::close() }}
 
 

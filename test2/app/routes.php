@@ -17,7 +17,7 @@ Route::get('/{id}', array('as' => 'vote.edit', function($id)
         // return our view and Vote information
         return View::make('tasks.vote-edit') // pulls app/views/nerd-edit.blade.php
             ->with('vote', Vote::find($id));
-    }));
+    }))->where('id','[0-9]+');
 
 Route::get('/{id}/{s}', array('as' => 'vote.edit2', function($id,$s) 
     {
