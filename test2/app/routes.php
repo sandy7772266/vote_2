@@ -10,6 +10,19 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
+Route::get('excel', function(){
+    Excel::load(storage_path().'/file.xlsx', function($reader) {
+        // $result = $reader->get();
+        $result = $reader->get()->toArray();
+        $result = $result[1];
+        $result = $result[0];
+
+        return var_dump($result);
+
+    });
+});
+
 Route::get('/', ['as' => 'home', 'uses' => 'VoteController@index']);
 //Route::get('/', ['as' => 'home']);
 Route::get('/{id}', array('as' => 'vote.edit', function($id) 
