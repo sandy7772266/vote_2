@@ -20,4 +20,7 @@
                     <input type="submit"  />
 {{ Form::close() }}
 
-<input class="form-control" name="title" type="text" id="title">	
+{{Form::open(array('url' => 'file_import', 'files' => true))}}
+{{Form::file('image')}}
+<input type="submit"  />
+{{ Form::close() }}

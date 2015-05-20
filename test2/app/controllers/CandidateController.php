@@ -54,38 +54,12 @@ class CandidateController extends \BaseController {
 		$value = null;		
 	 
 		 Excel::load(storage_path().'/001.xls', function($reader) use (&$value) {
-         //$result = $reader->get();
          $value = $reader->get()->toArray();//object -> array
-        // $result = $result[1];
-        // $result = $result[0];
-        //Session::put('data_s', $result);
- 		
-        //return var_dump($value);
-        //return Redirect::action('CandidateController@index');
-        //return Redirect::to('store_a');
 
 
     	});
-		// $value = Session::get('data_s');
-		//return Redirect::to('store_a');
 		 return Redirect::action('CandidateController@store_a', ['data' => $value]);
 	}
-
-
-	// public function create()
-	// {
- //    $value = null;		
-	 
- //    Excel::load(storage_path().'/001.xls', function($reader) use ($value){
-    
- //        $value = $reader->get()->toArray();//object -> array
- //        //Session::put('data_s', $result);
- 		
- //      	});
-	// 	 //$value = Session::get('data_s');
-		
-	// 	 return Redirect::action('CandidateController@store_a', ['data' => $value]);
-	// }
 
 
 	/**
@@ -97,25 +71,21 @@ class CandidateController extends \BaseController {
 
 	public function store_a()
 	{		
-		      //$value = Session::get('data_s');
-		      $user_data = Input::get('data');
-		     // $data = "test";
-		      return var_dump($user_data);
-
-		  //            foreach ($data as $data_array1) {
+		      $data = Input::get('data');
+		     
+		        foreach ($data as $data_array1) {
 			 		
 
 				
-				// 	$candidate = new Candidate;
-				// 	$candidate->cname=$data_array1[0];
-				// 	$candidate->job_title=$data_array1[1];
-				// 	$candidate->sex=$data_array1[2];
-				// 	$candidate->vote_id=42;
-				// 	$candidate->total_count=0;
-				// 	$candidate->save();
-				// }
+					$candidate = new Candidate;
+					$candidate->cname=$data_array1[0];
+					$candidate->job_title=$data_array1[1];
+					$candidate->sex=$data_array1[2];
+					$candidate->vote_id=42;
+					$candidate->total_count=0;
+					$candidate->save();
+				}
 
-		      //$this->mydd(user_data);
 	}
     //修改部分 end
 
@@ -134,6 +104,45 @@ class CandidateController extends \BaseController {
 		echo "tt";
 		echo "</pre>";
 	}
+
+
+
+	public function file_move()	{		
+
+		    
+		    if (Input::hasFile('image'))
+			{
+			    $file = Input::file('image'); //
+		    	$fileName = "test222";
+		    	$destinationPath = storage_path().'/file_import/';
+			    $file = $file->move($destinationPath, $fileName);
+			    //return $file;
+
+			    Excel::load($file, function($reader) {
+         			$value = $reader->get()->toArray();//object -> array
+
+				    foreach ($value as $data_array1) {
+				 		
+				    	$data_array1['vote_id'] = 43;
+				    	//var_dump($data_array1);
+						$candidate = Candidate::create($data_array1);
+						// $candidate = new Candidate;
+						// $candidate->cname=$data_array1[0];
+						// $candidate->job_title=$data_array1[1];
+						// $candidate->sex=$data_array1[2];
+						// $candidate->vote_id=42;
+						// $candidate->total_count=0;
+						// $candidate->save();
+					}
+				});
+			    // echo $file;
+
+				//File::delete($file);
+			}
+
+
+	}
+
 
 
 	public function show($id)

@@ -28,8 +28,9 @@ Route::get('/', ['as' => 'home', 'uses' => 'VoteController@index']);
 // Route::get('t2',  'CandidateController@store_a');
 
 Route::get('excel', ['as' => 'import_cadidates', 'uses' => 'CandidateController@create']);
-Route::get('excel_value', ['as' => 'import_cadidates_value', 'uses' => 'CandidateController_value@create']);
+Route::get('excel_value', ['as' => 'import_cadidates_value', 'uses' => 'CandidateController@create']);
 Route::get('store_a', ['as' => 'store_cadidates', 'uses' => 'CandidateController@store_a']);
+Route::post('file_import', ['as' => 'file_import', 'uses' => 'CandidateController@file_move']);
 Route::get('candidates_index', ['as' => 'cadidates', 'uses' => 'CandidateController@index']);
 //Route::get('/', ['as' => 'home']);
 Route::get('/{id}', array('as' => 'vote.edit', function($id) 
