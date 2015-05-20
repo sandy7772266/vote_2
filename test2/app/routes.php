@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('excel', function(){
-    Excel::load(storage_path().'/file.xlsx', function($reader) {
-        // $result = $reader->get();
-        $result = $reader->get()->toArray();
-        $result = $result[1];
-        $result = $result[0];
+Route::get('excel_1', function(){
+    Excel::load(storage_path().'/001.xls', function($reader) {
+         //$result = $reader->get();
+        $result = $reader->get()->toArray();//object -> array
+        // $result = $result[1];
+        // $result = $result[0];
 
         return var_dump($result);
 
@@ -24,6 +24,13 @@ Route::get('excel', function(){
 });
 
 Route::get('/', ['as' => 'home', 'uses' => 'VoteController@index']);
+// Route::get('t', 'CandidateController@create');
+// Route::get('t2',  'CandidateController@store_a');
+
+Route::get('excel', ['as' => 'import_cadidates', 'uses' => 'CandidateController@create']);
+Route::get('excel_value', ['as' => 'import_cadidates_value', 'uses' => 'CandidateController_value@create']);
+Route::get('store_a', ['as' => 'store_cadidates', 'uses' => 'CandidateController@store_a']);
+Route::get('candidates_index', ['as' => 'cadidates', 'uses' => 'CandidateController@index']);
 //Route::get('/', ['as' => 'home']);
 Route::get('/{id}', array('as' => 'vote.edit', function($id) 
     {
@@ -53,4 +60,5 @@ Route::resource('/api/votes', 'VoteController');
 Route::delete('/api/votes/clean', 'VoteController@clean');
 
 Route::resource('votes', 'VoteController');
+Route::resource('candidates', 'CandidateController');
 
