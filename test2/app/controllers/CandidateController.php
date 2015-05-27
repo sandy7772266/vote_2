@@ -121,6 +121,9 @@ class CandidateController extends \BaseController {
 
 
 			    Excel::selectSheetsByIndex(0)->load($file, function($reader) {
+			    	//以第一個資料表中的資料為主
+			    	//提醒使用ooo的使用者，不要存成 Microsoft Excel 95 
+			    	//需存成 Microsoft Excel 97/2000/xp  ***.xls
          			$value = $reader->get()->toArray();//object -> array
 
 				    foreach ($value as $data_array1) {
