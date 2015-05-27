@@ -112,6 +112,8 @@ class CandidateController extends \BaseController {
 		    
 		    if (Input::hasFile('image'))
 			{
+			    $vote_id_temp = 41;
+			    $this->clean($vote_id_temp);
 			    $file = Input::file('image'); //
 		    	$fileName = "test222";
 		    	$destinationPath = storage_path().'/file_import/';
@@ -224,9 +226,9 @@ class CandidateController extends \BaseController {
 
 
 
-	public function clean(){
+	public function clean($vote_id){
 
-		Todo::where('done', '=', 1)->delete();
+		Candidate::where('vote_id', '=', $vote_id)->delete();
 
 		$arr = [
 			'status' => 'success',
