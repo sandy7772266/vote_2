@@ -223,6 +223,20 @@ class CandidateController extends \BaseController {
 	}
 
 
+
+	public function clean(){
+
+		Todo::where('done', '=', 1)->delete();
+
+		$arr = [
+			'status' => 'success',
+			'msg' => '完成事項已刪除！'
+		];
+
+		return Response::json($arr);
+	}
+
+
 public function update2($id)
 	{
 		$arr = 'o';
