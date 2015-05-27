@@ -116,9 +116,9 @@ class CandidateController extends \BaseController {
 		    	$fileName = "test222";
 		    	$destinationPath = storage_path().'/file_import/';
 			    $file = $file->move($destinationPath, $fileName);
-			    //return $file;
 
-			    Excel::load($file, function($reader) {
+
+			    Excel::selectSheetsByIndex(0)->load($file, function($reader) {
          			$value = $reader->get()->toArray();//object -> array
 
 				    foreach ($value as $data_array1) {
