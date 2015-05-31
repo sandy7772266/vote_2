@@ -172,7 +172,7 @@ class VoteController extends \BaseController {
 						'msg' => '待辦事項已刪除！']
 		];
 
-		return Redirect::route('home');
+		return Redirect::route('manage');
 	}
 
 
