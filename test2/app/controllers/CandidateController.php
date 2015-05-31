@@ -112,7 +112,8 @@ class CandidateController extends \BaseController {
 		    
 		    if (Input::hasFile('image'))
 			{
-			    $vote_id_temp = 41;
+			    $vote_id_temp = Session::get('vote_id_insert', '');
+				
 			    $this->clean($vote_id_temp);
 			    $file = Input::file('image'); //
 		    	$fileName = "test222";
@@ -120,15 +121,15 @@ class CandidateController extends \BaseController {
 			    $file = $file->move($destinationPath, $fileName);
 
 
-			    Excel::selectSheetsByIndex(0)->load($file, function($reader) {
+			    Excel::selectSheetsByIndex(0)->load($file, function($reader) use($vote_id_temp) {
 			    	//以第一個資料表中的資料為主
 			    	//提醒使用ooo的使用者，不要存成 Microsoft Excel 95 
 			    	//需存成 Microsoft Excel 97/2000/xp  ***.xls
          			$value = $reader->get()->toArray();//object -> array
 
 				    foreach ($value as $data_array1) {
-				 		
-				    	$data_array1['vote_id'] = 43;
+				 		//$vote_id_temp = Session::get('vote_id_insert', '');
+				    	$data_array1['vote_id'] = $vote_id_temp;
 				    	//var_dump($data_array1);
 						$candidate = Candidate::create($data_array1);
 						// $candidate = new Candidate;
@@ -144,9 +145,11 @@ class CandidateController extends \BaseController {
 
 				//File::delete($file);
 			}
+			return Redirect::route('manage');
 
 
 	}
+
 
 
 
@@ -203,7 +206,7 @@ class CandidateController extends \BaseController {
 		];
 
 		//return Redirect::to('/');
-		return Redirect::route('home');
+		return Redirect::route('manage');
 	}
     //修改部分 end
 

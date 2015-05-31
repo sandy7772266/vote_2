@@ -20,7 +20,3 @@
                     <input type="submit"  />
 {{ Form::close() }}
 
-{{Form::open(array('url' => 'file_import', 'files' => true))}}
-{{Form::file('image')}}
-<input type="submit"  />
-{{ Form::close() }}

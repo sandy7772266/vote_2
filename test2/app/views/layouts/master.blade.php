@@ -20,11 +20,11 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="votes">Laravel Vote App</a>
+					<a class="navbar-brand" href="manage">Laravel Vote App</a>
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="votes">All Votes</a></li>
+						<li class="active"><a href="manage">All Votes</a></li>
 					</ul>
 				</div>
 			</div>

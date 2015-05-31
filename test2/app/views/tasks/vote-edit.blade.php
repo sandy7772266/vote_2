@@ -11,17 +11,17 @@
 		
 			<li class="list-group-item">
 				
-				{{Form::model($vote,['method'=>'PATCH','route'=>['votes.update',$vote->id]])}}			
-				{{Form::text('school_name')}}
-				{{Form::text('vote_title')}}
-				{{Form::text('vote_amount')}}
-				{{Form::text('start_at')}}
-				{{Form::text('end_at')}}
-				{{Form::text('vote_goal')}}
-				{{Form::text('can_select')}}
-				{{Form::text('builder_title')}}
+				{{Form::model($vote,['method'=>'PATCH','route'=>['votes.update',$vote->id]])}}	<br>		
+				{{Form::text('school_name')}}<br>
+				{{Form::text('vote_title')}}<br>
+				{{Form::text('vote_amount')}}<br>
+				{{Form::text('start_at')}}<br>
+				{{Form::text('end_at')}}<br>
+				{{Form::text('vote_goal')}}<br>
+				{{Form::text('can_select')}}<br>
+				{{Form::text('builder_title')}}<br>
 			 
-				{{$vote->id}}
+				{{$vote->id}}<br>
 				<input type="submit"  />
 				{{ Form::close() }}
 			</li>

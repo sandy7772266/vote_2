@@ -11,19 +11,21 @@
 |
 */
 
-Route::get('excel_1', function(){
-    Excel::load(storage_path().'/001.xls', function($reader) {
-         //$result = $reader->get();
-        $result = $reader->get()->toArray();//object -> array
-        // $result = $result[1];
-        // $result = $result[0];
 
-        return var_dump($result);
-
-    });
-});
 
 Route::get('/', ['as' => 'home', 'uses' => 'VoteController@index']);
+Route::get('/insert-first', array('as' => 'vote.insert-first', function() 
+    {
+        $votes = Vote::get();
+        // return our view and Vote information
+        return View::make('tasks.vote-insert-first', compact('votes'));
+    }));
+Route::get('/insert-second', array('as' => 'vote.insert-second', function() 
+    {
+        $votes = Vote::get();
+        // return our view and Vote information
+        return View::make('tasks.vote-insert-second', compact('votes'));
+    }));
 // Route::get('t', 'CandidateController@create');
 // Route::get('t2',  'CandidateController@store_a');
 
@@ -39,6 +41,13 @@ Route::get('/{id}', array('as' => 'vote.edit', function($id)
         return View::make('tasks.vote-edit') // pulls app/views/nerd-edit.blade.php
             ->with('vote', Vote::find($id));
     }))->where('id','[0-9]+');
+
+Route::get('/manage', array('as' => 'manage', function() 
+    {
+        $votes = Vote::get();
+        // return our view and Vote information
+        return View::make('tasks.vote-manage-index',compact('votes'));
+    }));
 
 Route::get('/{id}/{s}', array('as' => 'vote.edit2', function($id,$s) 
     {

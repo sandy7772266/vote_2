@@ -80,7 +80,15 @@ class VoteController extends \BaseController {
 			'flash' => ['type'=>'success','msg' => '新增成功！']
 		];
 
-		return Redirect::to('http://10.231.87.225:81/new_vote/test2/public/');		
+		$vote_new = DB::table('votes')
+                    ->orderBy('id', 'desc')
+                    //->groupBy('count')
+                    //->having('count', '>', 100)
+                    ->get();
+
+		$vote_id = $vote_new[0]->id;
+		Session::put('vote_id_insert', $vote_id);                
+		return Redirect::route('vote.insert-second');		
 	}
     //修改部分 end
 
@@ -143,7 +151,7 @@ class VoteController extends \BaseController {
 		];
 
 		//return Redirect::to('/');
-		return Redirect::route('home');
+		return Redirect::route('manage');
 	}
     //修改部分 end
 
