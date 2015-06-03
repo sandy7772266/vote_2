@@ -14,6 +14,16 @@
 
 
 Route::get('/', ['as' => 'home', 'uses' => 'VoteController@index']);
+
+Route::get('/openid', function()
+{
+    return View::make('hello');
+});
+
+Route::get('login/openid', 'AuthController@openIDLogin');
+Route::get('user/data/show', 'AuthController@showUserData');
+
+
 Route::get('/insert-first', array('as' => 'vote.insert-first', function() 
     {
         $votes = Vote::get();
@@ -32,6 +42,7 @@ Route::get('/insert-second', array('as' => 'vote.insert-second', function()
 Route::get('excel', ['as' => 'import_cadidates', 'uses' => 'CandidateController@create']);
 Route::get('excel_value', ['as' => 'import_cadidates_value', 'uses' => 'CandidateController@create']);
 Route::get('store_a', ['as' => 'store_cadidates', 'uses' => 'CandidateController@store_a']);
+Route::get('passsec', ['as' => 'passsec', 'uses' => 'VoteController@passsec']);
 Route::post('file_import', ['as' => 'file_import', 'uses' => 'CandidateController@file_move']);
 Route::get('candidates_index', ['as' => 'cadidates', 'uses' => 'CandidateController@index']);
 //Route::get('/', ['as' => 'home']);
@@ -45,18 +56,37 @@ Route::get('/{id}', array('as' => 'vote.edit', function($id)
 Route::get('/manage', array('as' => 'manage', function() 
     {
         $votes = Vote::get();
+        $ary[0] = $votes;
+        foreach ($ary[0] as $vote){
+           // $candidate = Candidate::find($vote->id);
+            $candidate_c = Candidate::where('vote_id', '=', $vote->id)->first();
+            if ($candidate_c <> null){
+                $ary[1][$vote->id] = $candidate_c->vote_id;
+            }
+            else{
+                $ary[1][$vote->id] = '沒有上傳';
+            }
+        }
         // return our view and Vote information
-        return View::make('tasks.vote-manage-index',compact('votes'));
+        return View::make('tasks.vote-manage-index',compact('ary'));
     }));
 
-Route::get('/{id}/{s}', array('as' => 'vote.edit2', function($id,$s) 
+Route::get('/candidate_data_show/{id}', array('as' => 'candidate_data_show', function($id) 
     {
+        $candidates = Candidate::where('vote_id', '=', $id)->get();
+       
         // return our view and Vote information
-        // return View::make('tasks.vote-edit') // pulls app/views/nerd-edit.blade.php
-        //     ->with('vote', Vote::find($id));
-
-         return View::make('tasks.vote-edit2', array('id' => $id,'s'=>$s,'vote'=>Vote::find($id)));
+        return View::make('tasks.candidate_data_show',compact('candidates'));
     }));
+
+// Route::get('/{id}/{s}', array('as' => 'vote.edit2', function($id,$s) 
+//     {
+//         // return our view and Vote information
+//         // return View::make('tasks.vote-edit') // pulls app/views/nerd-edit.blade.php
+//         //     ->with('vote', Vote::find($id));
+
+//          return View::make('tasks.vote-edit2', array('id' => $id,'s'=>$s,'vote'=>Vote::find($id)));
+//     }));
 
 
 Route::delete('/api/todos/clean', 'TodoController@clean');

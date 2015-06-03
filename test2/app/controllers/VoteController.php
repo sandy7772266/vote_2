@@ -87,10 +87,27 @@ class VoteController extends \BaseController {
                     ->get();
 
 		$vote_id = $vote_new[0]->id;
+		//$this->passsec($vote_id);	
 		Session::put('vote_id_insert', $vote_id);                
-		return Redirect::route('vote.insert-second');		
+		return Redirect::route('vote.insert-second');	
+		//Redirect::action('VoteController@passsec', ['id' => $vote_id]);
 	}
     //修改部分 end
+
+public function passsec($vote_id)
+	{
+		echo "oo";
+		Session::put('vote_id_insert', $vote_id);                
+		return Redirect::route('vote.insert-second');	
+		// $vote_id = Input::get('id');
+		// Session::put('vote_id_insert', $vote_id); 
+		// //Redirect::route('vote.insert-second');		
+		// $votes = Vote::get();
+		// echo 'p';
+  //       // return our view and Vote information
+  //       return View::make('tasks.vote-insert-second', compact('votes'));
+	}
+
 
 	/**
 	 * Display the specified resource.

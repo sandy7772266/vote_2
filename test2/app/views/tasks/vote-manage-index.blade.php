@@ -8,14 +8,18 @@
 	<h3>All Votes ~ title</h3>
 	<a href="{{ url('/insert-first') }}"><strong>新增</strong></a>	                                               	
 	<ul class="list-group">
-		@foreach ($votes as $vote)
+		@foreach ($ary[0] as $vote)
 			<li class="list-group-item">
 				
 				
+{{$ary[1][$vote->id]}}  
 
+				@if ($ary[1][$vote->id]<>'沒有上傳')
 
+				{{$ary[1][$vote->id]}}
+				<a href="{{ url('/candidate_data_show', array($vote->id), false) }}"><strong>候選人名單</strong></a>
 				
-
+				@endif 
 <!-- 				{{ Form::open(['url' => 'votes', 'class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}
  -->			{{ Form::open(['class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}
 				<a href="{{ url('/', array($vote->id), false) }}"><strong>{{ $vote->vote_title }}</strong></a>	                                               
