@@ -1,5 +1,7 @@
 {{ Form::open(['url' => '/votes', 'class' => 'form']) }}
-	  <input type="text" class="form-control" placeholder="校名...." autofocus required
+	                 <input type="text" class="form-control" placeholder="學校編號...." autofocus required
+                     name="school_no" />
+                     <input type="text" class="form-control" placeholder="校名...." autofocus required
                      name="school_name" />
                      <input type="text" class="form-control" placeholder="投票名稱...." autofocus required
                       name="vote_title" /> 
@@ -16,7 +18,7 @@
                          name="can_select" />  
 
                      <input type="text" class="form-control" placeholder="建立者職稱...." autofocus required
-                     name="builder_title" />                                                
+                     name="builder_name" />                                                
                     <input type="submit"  />
 {{ Form::close() }}
 

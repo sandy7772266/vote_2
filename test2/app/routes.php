@@ -42,7 +42,7 @@ Route::get('/insert-second', array('as' => 'vote.insert-second', function()
 Route::get('excel', ['as' => 'import_cadidates', 'uses' => 'CandidateController@create']);
 Route::get('excel_value', ['as' => 'import_cadidates_value', 'uses' => 'CandidateController@create']);
 Route::get('store_a', ['as' => 'store_cadidates', 'uses' => 'CandidateController@store_a']);
-Route::get('passsec', ['as' => 'passsec', 'uses' => 'VoteController@passsec']);
+Route::get('/passsec/', ['as' => 'passsec', 'uses' => 'VoteController@passsec']);
 Route::post('file_import', ['as' => 'file_import', 'uses' => 'CandidateController@file_move']);
 Route::get('candidates_index', ['as' => 'cadidates', 'uses' => 'CandidateController@index']);
 //Route::get('/', ['as' => 'home']);
@@ -52,6 +52,12 @@ Route::get('/{id}', array('as' => 'vote.edit', function($id)
         return View::make('tasks.vote-edit') // pulls app/views/nerd-edit.blade.php
             ->with('vote', Vote::find($id));
     }))->where('id','[0-9]+');
+
+Route::get('/passsec/{id}', array('as' => 'passsec', function($id) 
+    {
+       Session::put('vote_id_insert', $id);
+       return View::make('tasks.vote-insert-second');
+    }));
 
 Route::get('/manage', array('as' => 'manage', function() 
     {
@@ -64,7 +70,7 @@ Route::get('/manage', array('as' => 'manage', function()
                 $ary[1][$vote->id] = $candidate_c->vote_id;
             }
             else{
-                $ary[1][$vote->id] = '沒有上傳';
+                $ary[1][$vote->id] = '沒有資料';
             }
         }
         // return our view and Vote information

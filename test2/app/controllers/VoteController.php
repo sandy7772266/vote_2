@@ -65,6 +65,7 @@ class VoteController extends \BaseController {
 		//
 		$data = Input::all();
 		$vote = new Vote;
+		$vote->school_name=$data['school_no'];
 		$vote->school_name=$data['school_name'];
 		$vote->vote_title=$data['vote_title'];
 		$vote->vote_amount=$data['vote_amount'];
@@ -72,7 +73,7 @@ class VoteController extends \BaseController {
 		$vote->end_at=$data['end_at'];
 		$vote->vote_goal=$data['vote_goal'];
 		$vote->can_select=$data['can_select'];
-		$vote->builder_title=$data['builder_title'];
+		$vote->builder_name=$data['builder_name'];
 		$vote->save();
 
 		$arr=[
@@ -94,18 +95,12 @@ class VoteController extends \BaseController {
 	}
     //修改部分 end
 
-public function passsec($vote_id)
+public function passsec()
 	{
-		echo "oo";
+		$vote_id = Input::get('vote_id');
+		//echo "oo";
 		Session::put('vote_id_insert', $vote_id);                
-		return Redirect::route('vote.insert-second');	
-		// $vote_id = Input::get('id');
-		// Session::put('vote_id_insert', $vote_id); 
-		// //Redirect::route('vote.insert-second');		
-		// $votes = Vote::get();
-		// echo 'p';
-  //       // return our view and Vote information
-  //       return View::make('tasks.vote-insert-second', compact('votes'));
+
 	}
 
 

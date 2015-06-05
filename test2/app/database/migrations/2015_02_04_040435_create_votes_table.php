@@ -15,6 +15,7 @@ class CreateVotesTable extends Migration {
 		Schema::create('votes', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('school_no');
 			$table->string('school_name');
 			$table->string('vote_title');
 			$table->integer('vote_amount');
@@ -22,7 +23,7 @@ class CreateVotesTable extends Migration {
 			$table->datetime('end_at');
 			$table->integer('vote_goal');
 			$table->integer('can_select');
-			$table->string('builder_title');
+			$table->string('builder_name');
 			$table->timestamps();
 		});
 	}
