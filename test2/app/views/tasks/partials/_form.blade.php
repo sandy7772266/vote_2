@@ -17,7 +17,7 @@
                      <input type="text" class="form-control" placeholder="可投票數...." autofocus required
                          name="can_select" />  
 
-                     <input type="text" class="form-control" placeholder="建立者職稱...." autofocus required
+                     <input type="text" class="form-control" placeholder="建立者姓名...." autofocus required
                      name="builder_name" />                                                
                     <input type="submit"  />
 {{ Form::close() }}
