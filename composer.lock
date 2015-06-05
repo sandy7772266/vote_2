@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "55f91bebbb2e2d0b9e5a5662a0883d23",
+    "hash": "a7c87bd3b09f3c0f0a4f1764ecf02ce2",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -450,6 +450,33 @@
             "time": "2015-03-29 14:01:43"
         },
         {
+            "name": "lightopenid/lightopenid",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://git.gitorious.org/lightopenid/lightopenid.git",
+                "reference": "9d42dc24e4dd34121c98a6491bc3ef7933a68a19"
+            },
+            "require": {
+                "php": ">=5.2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "homepage": "http://code.google.com/p/lightopenid/",
+            "keywords": [
+                "OpenId"
+            ],
+            "time": "2013-10-27 16:25:49"
+        },
+        {
             "name": "maatwebsite/excel",
             "version": "v1.3.5",
             "source": {
@@ -834,7 +861,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "lightopenid/lightopenid": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
