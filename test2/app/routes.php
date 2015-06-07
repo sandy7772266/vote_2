@@ -21,6 +21,7 @@ Route::get('/openid', function()
 });
 
 Route::get('login/openid', 'AuthController@openIDLogin');
+Route::get('logout/openid', 'AuthController@openIDLogout');
 Route::get('user/data/show', 'AuthController@showUserData');
 
 
@@ -30,11 +31,12 @@ Route::get('/insert-first', array('as' => 'vote.insert-first', function()
         // return our view and Vote information
         return View::make('tasks.vote-insert-first', compact('votes'));
     }));
-Route::get('/insert-second', array('as' => 'vote.insert-second', function() 
+Route::get('/insert-second/{id}', array('as' => 'vote.insert-second', function($id) 
     {
-        $votes = Vote::get();
+        //$votes = Vote::get();
         // return our view and Vote information
-        return View::make('tasks.vote-insert-second', compact('votes'));
+        Session::put('vote_id_insert', $id);
+        return View::make('tasks.vote-insert-second');
     }));
 // Route::get('t', 'CandidateController@create');
 // Route::get('t2',  'CandidateController@store_a');
@@ -42,7 +44,7 @@ Route::get('/insert-second', array('as' => 'vote.insert-second', function()
 Route::get('excel', ['as' => 'import_cadidates', 'uses' => 'CandidateController@create']);
 Route::get('excel_value', ['as' => 'import_cadidates_value', 'uses' => 'CandidateController@create']);
 Route::get('store_a', ['as' => 'store_cadidates', 'uses' => 'CandidateController@store_a']);
-Route::get('/passsec/', ['as' => 'passsec', 'uses' => 'VoteController@passsec']);
+//Route::get('/passsec/', ['as' => 'passsec', 'uses' => 'VoteController@passsec']);
 Route::post('file_import', ['as' => 'file_import', 'uses' => 'CandidateController@file_move']);
 Route::get('candidates_index', ['as' => 'cadidates', 'uses' => 'CandidateController@index']);
 //Route::get('/', ['as' => 'home']);
@@ -53,11 +55,6 @@ Route::get('/{id}', array('as' => 'vote.edit', function($id)
             ->with('vote', Vote::find($id));
     }))->where('id','[0-9]+');
 
-Route::get('/passsec/{id}', array('as' => 'passsec', function($id) 
-    {
-       Session::put('vote_id_insert', $id);
-       return View::make('tasks.vote-insert-second');
-    }));
 
 Route::get('/manage', array('as' => 'manage', function() 
     {

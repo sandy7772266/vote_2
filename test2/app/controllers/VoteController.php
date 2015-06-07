@@ -65,15 +65,15 @@ class VoteController extends \BaseController {
 		//
 		$data = Input::all();
 		$vote = new Vote;
-		$vote->school_name=$data['school_no'];
-		$vote->school_name=$data['school_name'];
+		$vote->school_no=Session::get('school_no');
+		$vote->school_name=Session::get('school_name');
 		$vote->vote_title=$data['vote_title'];
 		$vote->vote_amount=$data['vote_amount'];
 		$vote->start_at=$data['start_at'];
 		$vote->end_at=$data['end_at'];
 		$vote->vote_goal=$data['vote_goal'];
 		$vote->can_select=$data['can_select'];
-		$vote->builder_name=$data['builder_name'];
+		$vote->builder_name=Session::get('builder_name');
 		$vote->save();
 
 		$arr=[
@@ -89,17 +89,16 @@ class VoteController extends \BaseController {
 
 		$vote_id = $vote_new[0]->id;
 		//$this->passsec($vote_id);	
-		Session::put('vote_id_insert', $vote_id);                
-		return Redirect::route('vote.insert-second');	
+		//Session::put('vote_id_insert', $vote_id);                
+		//return Redirect::route('vote.insert-second');
+		return Redirect::route('vote.insert-second', array('vote_id' => $vote_id));	
 		//Redirect::action('VoteController@passsec', ['id' => $vote_id]);
 	}
     //修改部分 end
 
 public function passsec()
 	{
-		$vote_id = Input::get('vote_id');
-		//echo "oo";
-		Session::put('vote_id_insert', $vote_id);                
+		               
 
 	}
 
