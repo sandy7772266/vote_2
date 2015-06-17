@@ -92,6 +92,59 @@ Route::get('/candidate_data_show/{id}', array('as' => 'candidate_data_show', fun
 //     }));
 
 
+Route::get('/test', function()
+{
+    // $artist = new Artist;
+    // $artist->name = 'Eve 6';
+    // $artist->save();
+
+
+                    // $candidate = new Candidate;
+                    // $candidate->cname=$data_array1[0];
+                    // $candidate->job_title=$data_array1[1];
+                    // $candidate->sex=$data_array1[2];
+                    // $candidate->vote_id=42;
+                    // $candidate->total_count=0;
+                    
+                    // $account = new Account;
+                    // $account->username;
+                    // $account->vote_id;
+                    // $account->finish_at;
+
+    $vote = Vote::find(2);
+
+    $account = new Account;
+    $account->username='sandy';
+    $account->vote_id=2;
+    $account->finish_at="0000-00-00 00:00:00";
+    $account->vote()->associate($vote);
+    $account->save();
+
+    $account2 = new Account;
+    $account2->username='sandy2';
+    $account2->vote_id=2;
+    $account2->finish_at="0000-00-00 00:00:00";
+    $account2->vote()->associate($vote);
+    $account2->save();
+
+    $candidate = new Candidate;
+    $candidate->cname = 'Naruto Uzumaki';
+    $candidate->job_title='yy';
+    $candidate->sex='男';
+    $candidate->vote_id=2;
+    $candidate->total_count=2;
+
+    $candidate->save();
+    $candidate->accounts()->save($account);
+    $candidate->accounts()->save($account2);
+
+    // return $candidate->accounts;
+    return Candidate::with('accounts')->find($candidate->id);
+
+   
+});
+
+
 Route::delete('/api/todos/clean', 'TodoController@clean');
 Route::resource('/api/todos', 'TodoController');
 // Route::controller('/api/todos', 'TodoController');

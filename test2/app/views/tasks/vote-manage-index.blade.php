@@ -1,3 +1,7 @@
+
+@if (Session::has('builder_name'))
+
+
 @extends('layouts.master')
 
 
@@ -43,3 +47,8 @@
 </div>
 
 @stop
+
+@else
+
+	<center><h3>請登入</h3></center>
+@endif
