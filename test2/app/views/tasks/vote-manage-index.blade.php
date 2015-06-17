@@ -14,13 +14,15 @@
 				@if ($ary[1][$vote->id]<>'沒有資料')
 
 				{{$ary[1][$vote->id]}}
-				<a href="{{ url('/candidate_data_show', array($vote->id), false) }}"><strong>候選人名單</strong></a>
+				<a href="{{ url('/candidate_data_show', array($vote->id), false) }}"><strong>選項內容</strong></a>
 				
 				@else
 				{{$vote->id}}
 				@endif 
 
-				<a href="{{ url('/insert-second', array($vote->id), false) }}"><strong>上傳候選人名單</strong></a>
+
+
+				<a href="{{ url('/insert-second', array($vote->id), false) }}"><strong>上傳選項內容</strong></a>
 
 <!-- 				{{ Form::open(['url' => 'votes', 'class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}
  -->			{{ Form::open(['class' => 'form','method'=>'delete','route'=>['votes.destroy', $vote->id]]) }}

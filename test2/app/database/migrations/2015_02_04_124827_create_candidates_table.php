@@ -18,7 +18,8 @@ class CreateCandidatesTable extends Migration {
 			$table->string('cname');
 			$table->string('job_title');
 			$table->string('sex');
-			$table->integer('vote_id');
+			$table->integer('vote_id')->unsigned();
+			$table->foreign('vote_id')->references('id')->on('votes');
 			$table->integer('total_count');
 			$table->timestamps();
 		});

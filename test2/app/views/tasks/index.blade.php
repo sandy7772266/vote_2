@@ -12,7 +12,7 @@
 				投票：(請輸入籤號)
 
 
-				<a href="{{ url('/', array("hh"), false) }}"><strong>555</strong></a>	                                               
+				<!-- <a href="{{ url('/', array("hh"), false) }}"><strong>555</strong></a>	                                                -->
 	</ul>
 </div>
 

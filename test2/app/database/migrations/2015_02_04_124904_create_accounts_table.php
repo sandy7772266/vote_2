@@ -16,8 +16,8 @@ class CreateAccountsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('username');
-			$table->string('vote_to_id');
-			$table->integer('vote_id');
+			$table->integer('vote_id')->unsigned();
+			$table->foreign('vote_id')->references('id')->on('votes');
 			$table->datetime('finish_at');
 			$table->timestamps();
 		});
