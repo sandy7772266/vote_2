@@ -88,6 +88,10 @@ class VoteController extends \BaseController {
                     ->get();
 
 		$vote_id = $vote_new[0]->id;
+		$vote_data=[$vote_id,$vote->vote_amount];
+		Session::put('vote_data', $vote_data);
+		Session::put('redo', 1);
+		$this->account_create();
 		//$this->passsec($vote_id);	
 		//Session::put('vote_id_insert', $vote_id);                
 		//return Redirect::route('vote.insert-second');
@@ -96,11 +100,78 @@ class VoteController extends \BaseController {
 	}
     //修改部分 end
 
-public function passsec()
+   
+	public function account_create()
 	{
-		               
+		
+		$redo = Session::get('redo');
+		Session::forget('redo');
+		$vote_id = Session::get('vote_id');
+		if ($redo == 1){
+			
+			Account::where('vote_id', '=', $vote_id)->delete();
+		}
+		$vote_data = Session::get('vote_data');
+		
+		
+		$vote_amount = $vote_data[1];
+		
+			// $table->increments('id');
+			// $table->string('username');
+			// $table->integer('vote_id')->unsigned();
+		for($x=0;$x<=$vote_amount-1;$x++){ 
+		$str_rand = $this->GeraHash(6);
+		$zero_str_len = strlen($vote_amount) - strlen($x) ;
+		$zero_str = '';
+			for($y=1;$y<=$zero_str_len;$y++){ 
+				$zero_str .= '0';
+			}
+		$index_no = $zero_str.$x;
+		$Caracteres = 'ABCDEFGHJKLMPQRSTUVXWYZ23456789';
+		$index_str = '';
+			for ($y=0;$y<strlen($index_no);$y++){ 
+				$index_ary[$y] = intval(substr($index_no, $y, 1));
+				$index_ary_insert[$y] = substr($Caracteres, $index_ary[$y]+7, 1);
+				$index_str .= $index_ary_insert[$y];
+			}
+			//echo $index_str."**";
+		$str_rand = substr($str_rand, 0, 2).$index_str.substr($str_rand, 3, 5); 
+		$username_ary[$x] = $str_rand;
+
+ 		}    
+ 		for($x=0;$x<=$vote_amount-1;$x++){ 
+	 		$account = new Account;
+			$account->username = $username_ary[$x];
+			$account->vote_id = $vote_data[0];
+			$account->save();    
+		}    
+		//Session::flush();
+		//return Redirect::route('vote.insert-second', array('vote_id' => $vote_id));	 
+		if ($redo == 1){
+			return Redirect::route('manage');
+			//return Redirect::route('vote.insert-second', array('vote_id' => $vote_id));	
+		}
+		//Session::put('vote_id_insert', $vote_id);
+		//return Redirect::route('vote.insert-second', array('vote_id' => $vote_id));	
+        //return View::make('tasks.vote-insert-second');
 
 	}
+
+
+	function GeraHash($qx){ 
+        //Under the string $Caracteres you write all the characters you want to be used to randomly generate the code. 
+        $Caracteres = 'ABCDEFGHJKLMPQRSTUVXWYZ23456789'; 
+        $QuantidadeCaracteres = strlen($Caracteres); 
+        $QuantidadeCaracteres--; 
+
+        $Hash=NULL; 
+            for($x=1;$x<=$qx;$x++){ 
+                $Posicao = rand(0,$QuantidadeCaracteres); 
+                $Hash .= substr($Caracteres,$Posicao,1); 
+		    } 
+
+		return $Hash; 
+	} 
 
 
 	/**
@@ -176,8 +247,10 @@ public function passsec()
 	{
 		//
 		$vote = Vote::find($id);
+		
+		Account::where('vote_id', '=', $id)->delete();
+		Candidate::where('vote_id', '=', $id)->delete();
 		$vote->delete();
-
 		$arr = [
 			'flash' => ['type' => 'success',
 						'msg' => '待辦事項已刪除！']
@@ -193,5 +266,26 @@ public function update2($id)
 		return Response::json($arr);
 	}
     //修改部分 end
+
+
+     //尚未用到
+public function redo($id)
+	{
+		$accounts = Account::where('vote_id', '=', $id)->get();
+        $votes = Vote::where('id', '=', $id)->get();
+        $school_no = $votes[0]->school_no;
+        $vote_amount = $votes[0]->vote_amount;
+        $redo = 1;
+        $data = [$accounts,$school_no,$vote_amount,$redo];
+        
+        $vote_data=[$id,$vote_amount];
+        //$redo = 1;
+        //echo "id",$votes[0]->$id,"amount",$votes[0]->vote_amount;
+        Session::put('vote_id', $id);
+        Session::put('vote_data', $vote_data);
+        Session::put('redo', 1);
+
+	}
+
 
 }

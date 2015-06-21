@@ -82,6 +82,71 @@ Route::get('/candidate_data_show/{id}', array('as' => 'candidate_data_show', fun
         return View::make('tasks.candidate_data_show',compact('candidates'));
     }));
 
+Route::get('/account_data_show/{id}', array('as' => 'account_data_show', function($id) 
+    {
+        $accounts = Account::where('vote_id', '=', $id)->get();
+        $votes = Vote::where('id', '=', $id)->get();
+        $school_no = $votes[0]->school_no;
+        $vote_amount = $votes[0]->vote_amount;
+        $redo = 0;
+        $data = [$accounts,$school_no,$vote_amount,$redo];
+
+        // return our view and Vote information
+        return View::make('tasks.account_data_show',compact('data'));
+    }));
+
+Route::get('/account_data_redo/{id}', array('as' => 'account_data_redo', function($id) 
+    {
+        $accounts = Account::where('vote_id', '=', $id)->get();
+        $votes = Vote::where('id', '=', $id)->get();
+        $school_no = $votes[0]->school_no;
+        $vote_amount = $votes[0]->vote_amount;
+        $redo = 1;
+        $data = [$accounts,$school_no,$vote_amount,$redo];
+        
+        $vote_data=[$id,$vote_amount];
+        //$redo = 1;
+        //echo "id",$votes[0]->$id,"amount",$votes[0]->vote_amount;
+        Session::put('vote_id', $id);
+        Session::put('vote_data', $vote_data);
+        Session::put('redo', 1);
+
+        // return our view and Vote information
+        return View::make('tasks.account_data_show',compact('data'));
+    }));
+
+// Route::get('/account_redo_true/{id}', array('as' => 'account_redo_true', function($id) 
+//     {
+//         //$accounts = Account::where('vote_id', '=', $id)->get();
+//         Account::where('vote_id', '=', $id)->delete();
+//         $votes = Vote::where('id', '=', $id)->get();
+//        // $vote_id = $vote_new[0]->id;
+//         $vote_data=[$vote->$id,$vote->vote_amount];
+//         //$redo = 1;
+//         Session::put('vote_data', $vote_data);
+//         Session::put('redo', 1);
+//         //$data = [$accounts,$school_no,$vote_amount,$redo];
+        
+
+//         // return our view and Vote information
+//         //return View::make('tasks.account_data_show',compact('data'));
+//     }));
+
+Route::get('/account_redo_true/{id}', array('as' => 'account_redo_true', 'uses' => 'VoteController@account_create',function($id) 
+    {
+        Account::where('vote_id', '=', $id)->delete();
+        $votes = Vote::where('id', '=', $id)->get();
+        $vote = $votes[0];
+        $vote_data=[$votes[0]->$id,$votes[0]->vote_amount];
+        //$redo = 1;
+        echo "id",$votes[0]->$id,"amount",$votes[0]->vote_amount;
+        Session::put('vote_data', $vote_data);
+        Session::put('redo', 1);
+
+    }));
+
+Route::get('/account_data_del/{id}', ['as' => 'account_data_del', 'uses' => 'AccountController@clean']);
+
 // Route::get('/{id}/{s}', array('as' => 'vote.edit2', function($id,$s) 
 //     {
 //         // return our view and Vote information
@@ -111,38 +176,63 @@ Route::get('/test', function()
                     // $account->vote_id;
                     // $account->finish_at;
 
-    $vote = Vote::find(2);
+    // $vote = Vote::find(2);
 
-    $account = new Account;
-    $account->username='sandy';
-    $account->vote_id=2;
-    $account->finish_at="0000-00-00 00:00:00";
-    $account->vote()->associate($vote);
-    $account->save();
+    // $account = new Account;
+    // $account->username='sandy';
+    // $account->vote_id=2;
+    // $account->finish_at="0000-00-00 00:00:00";
+    // $account->vote()->associate($vote);
+    // $account->save();
 
-    $account2 = new Account;
-    $account2->username='sandy2';
-    $account2->vote_id=2;
-    $account2->finish_at="0000-00-00 00:00:00";
-    $account2->vote()->associate($vote);
-    $account2->save();
+    // $account2 = new Account;
+    // $account2->username='sandy2';
+    // $account2->vote_id=2;
+    // $account2->finish_at="0000-00-00 00:00:00";
+    // $account2->vote()->associate($vote);
+    // $account2->save();
 
-    $candidate = new Candidate;
-    $candidate->cname = 'Naruto Uzumaki';
-    $candidate->job_title='yy';
-    $candidate->sex='男';
-    $candidate->vote_id=2;
-    $candidate->total_count=2;
+    // $candidate = new Candidate;
+    // $candidate->cname = 'Naruto Uzumaki';
+    // $candidate->job_title='yy';
+    // $candidate->sex='男';
+    // $candidate->vote_id=2;
+    // $candidate->total_count=2;
 
-    $candidate->save();
-    $candidate->accounts()->save($account);
-    $candidate->accounts()->save($account2);
+    // $candidate->save();
+    // $candidate->accounts()->save($account);
+    // $candidate->accounts()->save($account2);
 
-    // return $candidate->accounts;
-    return Candidate::with('accounts')->find($candidate->id);
+    // $account = Account::find(1);
+    $candidate = Candidate::find(10);
+    $candidate->accounts()->detach();
+   
+    // // return $candidate->accounts;
+    // return Candidate::with('accounts')->find($candidate->id);
 
    
 });
+
+
+Route::get('/test2', function()
+{
+    function GeraHash($qx){ 
+        //Under the string $Caracteres you write all the characters you want to be used to randomly generate the code. 
+        $Caracteres = 'ABCDEFGHIJKLMPQRSTUVXWYZ123456789'; 
+        $QuantidadeCaracteres = strlen($Caracteres); 
+        $QuantidadeCaracteres--; 
+
+        $Hash=NULL; 
+            for($x=1;$x<=$qx;$x++){ 
+                $Posicao = rand(0,$QuantidadeCaracteres); 
+                $Hash .= substr($Caracteres,$Posicao,1); 
+    } 
+
+return $Hash; 
+} 
+echo GeraHash(3); 
+});
+
 
 
 Route::delete('/api/todos/clean', 'TodoController@clean');
@@ -154,7 +244,9 @@ Route::delete('/api/users/clean', 'UserController@clean');
 
 Route::resource('/api/votes', 'VoteController');
 Route::delete('/api/votes/clean', 'VoteController@clean');
+Route::delete('/api/accounts/clean', 'AccountController@clean');
 
 Route::resource('votes', 'VoteController');
 Route::resource('candidates', 'CandidateController');
+Route::resource('accounts', 'AccountController');
 

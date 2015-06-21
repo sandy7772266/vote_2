@@ -20,18 +20,18 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="http://127.0.0.1/vote_2/test2/public/">Laravel Vote App</a>
+					<a class="navbar-brand" href="http://10.231.87.225:81/new_vote_test/test2/public/">Laravel Vote App</a>
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="http://127.0.0.1/vote_2/test2/public/">All Votes</a></li>
+						<li class="active"><a href="http://10.231.87.225:81/new_vote_test/test2/public/">All Votes</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 					@if (Session::has('builder_name'))
-						<li class="active"><a href="http://127.0.0.1/vote_2/test2/public/manage">管理畫面</a></li>
-						<li class="active"><a href="http://127.0.0.1/vote_2/test2/public/logout/openid">管理者登出</a></li>
+						<li class="active"><a href="http://10.231.87.225:81/new_vote_test/test2/public/manage">管理畫面</a></li>
+						<li class="active"><a href="http://10.231.87.225:81/new_vote_test/test2/public/logout/openid">管理者登出</a></li>
 					@else
-						<li class="active"><a href="http://127.0.0.1/vote_2/test2/public/login/openid">管理者登入</a></li>
+						<li class="active"><a href="http://10.231.87.225:81/new_vote_test/test2/public/login/openid">管理者登入</a></li>
 					@endif
 					</ul>
 				</div>
