@@ -2,6 +2,11 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+
+		{{ HTML::style('css/bootstrap.min.css') }}
+		{{ HTML::style('css/application.css') }}
+		{{ HTML::style('js/jquery-2.0.3.min.js') }}
+		{{ HTML::style('js/application.js') }}
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/application.css" />
 		

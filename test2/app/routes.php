@@ -47,6 +47,7 @@ Route::get('store_a', ['as' => 'store_cadidates', 'uses' => 'CandidateController
 //Route::get('/passsec/', ['as' => 'passsec', 'uses' => 'VoteController@passsec']);
 Route::post('file_import', ['as' => 'file_import', 'uses' => 'CandidateController@file_move']);
 Route::get('candidates_index', ['as' => 'cadidates', 'uses' => 'CandidateController@index']);
+
 //Route::get('/', ['as' => 'home']);
 Route::get('/{id}', array('as' => 'vote.edit', function($id) 
     {
@@ -81,6 +82,44 @@ Route::get('/candidate_data_show/{id}', array('as' => 'candidate_data_show', fun
         // return our view and Vote information
         return View::make('tasks.candidate_data_show',compact('candidates'));
     }));
+
+Route::get('/candidates_select/', array('as' => 'candidates_select', function()
+{
+    $data = Input::all();
+    $id = $data['vote_id'];
+    $account = Account::where('username', '=', $data['account'])->get();
+    $account_id = $account[0]->id;
+    //dd($account_id);
+    Session::put('account_id', $account_id);
+
+    $candidates = Candidate::where('vote_id', '=', $id)->get();
+
+    // return our view and Vote information
+    return View::make('tasks.candidate_select',compact('candidates','account_id'));
+}));
+
+Route::get('/candidates_select_result/', array('as' => 'candidates_select_result', function()
+{
+    $cadidates_checked = Input::get('candidate');
+    if(is_array($cadidates_checked))
+    {
+        $account_id = Session::get('account_id', '這是預設值，沒設定過就用這個囉！！');
+        echo $account_id;
+       //dd('5');
+        $account = Account::find($account_id);
+     foreach ($cadidates_checked as $candidate_id){
+         echo $candidate_id;
+
+         $candidate = Candidate::find($candidate_id);
+         $candidate->accounts()->save($account);
+         $candidate->total_count ++;
+         $candidate->save();
+     }
+        //echo $account_id;
+    }
+    // return our view and Vote information
+   // return View::make('tasks.candidate_select_result',compact('candidates'));
+}));
 
 Route::get('/account_data_show/{id}', array('as' => 'account_data_show', function($id) 
     {
@@ -176,36 +215,36 @@ Route::get('/test', function()
                     // $account->vote_id;
                     // $account->finish_at;
 
-    // $vote = Vote::find(2);
+     $vote = Vote::find(49);
 
-    // $account = new Account;
-    // $account->username='sandy';
-    // $account->vote_id=2;
-    // $account->finish_at="0000-00-00 00:00:00";
-    // $account->vote()->associate($vote);
-    // $account->save();
+     $account = new Account;
+     $account->username='sandy';
+     $account->vote_id=49;
+     $account->finish_at="0000-00-00 00:00:00";
+     $account->vote()->associate($vote);
+     $account->save();
 
-    // $account2 = new Account;
-    // $account2->username='sandy2';
-    // $account2->vote_id=2;
-    // $account2->finish_at="0000-00-00 00:00:00";
-    // $account2->vote()->associate($vote);
-    // $account2->save();
+     $account2 = new Account;
+     $account2->username='sandy2';
+     $account2->vote_id=2;
+     $account2->finish_at="0000-00-00 00:00:00";
+     $account2->vote()->associate($vote);
+     $account2->save();
 
-    // $candidate = new Candidate;
-    // $candidate->cname = 'Naruto Uzumaki';
-    // $candidate->job_title='yy';
-    // $candidate->sex='男';
-    // $candidate->vote_id=2;
-    // $candidate->total_count=2;
+     $candidate = new Candidate;
+     $candidate->cname = 'Naruto Uzumaki';
+     $candidate->job_title='yy';
+     $candidate->sex='男';
+     $candidate->vote_id=49;
+     $candidate->total_count=2;
 
-    // $candidate->save();
-    // $candidate->accounts()->save($account);
-    // $candidate->accounts()->save($account2);
+     $candidate->save();
+     $candidate->accounts()->save($account);
+     $candidate->accounts()->save($account2);
 
     // $account = Account::find(1);
-    $candidate = Candidate::find(10);
-    $candidate->accounts()->detach();
+   // $candidate = Candidate::find(10);
+   // $candidate->accounts()->detach();
    
     // // return $candidate->accounts;
     // return Candidate::with('accounts')->find($candidate->id);

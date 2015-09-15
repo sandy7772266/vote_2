@@ -38,7 +38,7 @@ class VoteController extends \BaseController {
 
 		$votes = Vote::get();
 
-		return View::make('tasks.index', compact('votes'));	
+		return View::make('tasks.index2', compact('votes'));
 	}
 
 
@@ -247,9 +247,12 @@ class VoteController extends \BaseController {
 	{
 		//
 		$vote = Vote::find($id);
-		
+		$candidates = Candidate::where('vote_id', '=', $id)->get();
+		foreach ($candidates as $candidate){
+			 $candidate->accounts()->detach();
+			$candidate->delete();
+		}
 		Account::where('vote_id', '=', $id)->delete();
-		Candidate::where('vote_id', '=', $id)->delete();
 		$vote->delete();
 		$arr = [
 			'flash' => ['type' => 'success',

@@ -24,9 +24,9 @@
 			<li class="list-group-item">
 				{{$index ++}}
 				學校代號：{{$data[1]}}
+				投票代號：{{$account->vote_id}}
 				籤號：{{$account->username}}
-				<!-- {{$account->vote_id}}
-				{{$account->finish_at}}
+						<!--{{$account->finish_at}}
  -->
 
 				<br>

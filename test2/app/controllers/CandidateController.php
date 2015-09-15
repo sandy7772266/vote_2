@@ -252,4 +252,25 @@ public function update2($id)
 	}
     //修改部分 end
 
+
+
+//	public function candidates_select_result($id)
+//	{
+//		//    $cadidates_checked = Input::get('candidate');
+////    if(is_array($cadidates_checked))
+////    {
+////
+////     foreach ($cadidates_checked as $candidate_id){
+////         echo $candidate_id;
+////         //$account = Account::find(6776);
+////         //$candidate->accounts()->save($account);
+//////            $candidate->accounts()->detach();
+//////            $candidate->delete();
+////     }
+////        //echo $account_id;
+////    }
+////    // return our view and Vote information
+////   // return View::make('tasks.candidate_select_result',compact('candidates'));
+//	}
+
 }
