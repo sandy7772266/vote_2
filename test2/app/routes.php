@@ -11,7 +11,10 @@
 |
 */
 
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+//App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+//    return Response::make('Not Found', 404);
+//});
 
 Route::get('/', ['as' => 'home', 'uses' => 'VoteController@index']);
 
@@ -87,15 +90,28 @@ Route::get('/candidates_select/', array('as' => 'candidates_select', function()
 {
     $data = Input::all();
     $id = $data['vote_id'];
-    $account = Account::where('username', '=', $data['account'])->get();
-    $account_id = $account[0]->id;
-    //dd($account_id);
-    Session::put('account_id', $account_id);
 
-    $candidates = Candidate::where('vote_id', '=', $id)->get();
+//      WHERE (a=1 OR b=1) AND (c=1 OR d=1)*****
+//    Acount::where(function ($query) {
+//        $query->where('username', '=', $data['account'])
+//          ; })->where(function ($query) {
+//        $query->where('c', '=', 1)
+//            ->orWhere('d', '=', 1);
+//    });
 
-    // return our view and Vote information
-    return View::make('tasks.candidate_select',compact('candidates','account_id'));
+    try {
+        $account = Account::where('vote_id', '=', $data['vote_id'])->where('username', '=', $data['account'])->firstorfail();
+        $account_id = $account->id;
+        Session::put('account_id', $account_id);
+        $candidates = Candidate::where('vote_id', '=', $id)->get();
+
+        return View::make('tasks.candidate_select', compact('candidates', 'account_id'));
+
+    } catch(ModelNotFoundException $e) {
+        $err = "投票代號或籤號錯誤";
+        return View::make('tasks.index2', compact('votes','err'));
+    }
+
 }));
 
 Route::get('/candidates_select_result/', array('as' => 'candidates_select_result', function()

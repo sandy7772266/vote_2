@@ -35,10 +35,10 @@ class VoteController extends \BaseController {
 	public function index()
 	{
 		//$votes = Response::json(Vote::all());
-
+		$err='';
 		$votes = Vote::get();
 
-		return View::make('tasks.index2', compact('votes'));
+		return View::make('tasks.index2', compact('votes','err'));
 	}
 
 
