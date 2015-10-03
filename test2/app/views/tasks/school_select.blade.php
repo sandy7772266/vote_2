@@ -7,11 +7,11 @@
 
 
 	<div class="col-md-6">
-		<h5>請輸入投票代號與籤號</h5>
+		<h5>請輸入學校代號</h5>
 		@if($err)
 			{{print $err;}}
 			{{$err='';}}
 		@endif
-		@include('tasks/partials/_form_account')
+		@include('tasks/partials/_form_select_school_no')
 	</div>
 @stop

@@ -1,7 +1,4 @@
 
-@if (Session::has('builder_name'))
-
-
 @extends('layouts.master')
 
 
@@ -9,43 +6,26 @@
 
 @section('content')
 <div class="col-md-6">
-	<h3>投票系統管理</h3>
-	<a href="{{ url('/insert-first') }}"><strong>新增</strong></a>	                                               	
+	<h3>投票結果</h3>
 	<ul class="list-group">
 
-	<?php 
-	Session::forget('redo');
-	
-	?>
-		@foreach ($ary[0] as $vote)
-		<?php
-		$candidates = Candidate::where('vote_id', '=', $vote->id)->get();
-		$can_id = null;
-		if ( count($candidates) <> 0 ){
-		$can_id = $candidates[0]->id;
+		@foreach ($votes as $vote)
 
-		}
-		?>
 			<li class="list-group-item">
 				<table>
 				<tr>
-				<td >
-				@if ($ary[1][$vote->id]<>'沒有資料')
+				<td ><a href="{{ url('/vote_result_show', array($vote->id), false) }}"><strong>{{$vote->vote_title}}結果</strong></a>
 
-				<!-- {{$ary[1][$vote->id]}} -->
-				<a href="{{ url('/candidate_data_show', array($vote->id), false) }}"><strong>瀏覽選項內容</strong></a>
 				
-				
-				@else
-				沒有選項內容
-				@endif 
+
+
 				</td>
 				<td>
-				@if ( $can_id <> null )	
-				<a href="{{ url('/insert-second', array($vote->id), false) }}"><strong>重新上傳選項內容</strong></a>
-				@else
-				<a href="{{ url('/insert-second', array($vote->id), false) }}"><strong>上傳選項內容</strong></a>
-				@endif
+				{{--@if ( $can_id <> null )--}}
+				{{--<a href="{{ url('/insert-second', array($vote->id), false) }}"><strong>重新上傳選項內容</strong></a>--}}
+				{{--@else--}}
+				{{--<a href="{{ url('/insert-second', array($vote->id), false) }}"><strong>上傳選項內容</strong></a>--}}
+				{{--@endif--}}
 				</td>
 				<td>
 				<a href="{{ url('/account_data_show', array($vote->id), false) }}"><strong>籤票內容</strong></a>
@@ -83,8 +63,3 @@
 </div>
 
 @stop
-
-@else
-
-	<center><h3>請登入</h3></center>
-@endif

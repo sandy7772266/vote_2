@@ -10,7 +10,9 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+//require 'vendor/autoload.php';
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 //App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $e) {
 //    return Response::make('Not Found', 404);
@@ -114,6 +116,52 @@ Route::get('/candidates_select/', array('as' => 'candidates_select', function()
 
 }));
 
+Route::get('/school_select/', array('as' => 'school_select', function()
+{
+            $err='';
+           return View::make('tasks.school_select', compact('err'));
+
+   }));
+Route::get('/vote_result_show_index/', array('as' => 'vote_result_show_index', function()
+{
+    $data = Input::all();
+    $school_no = $data['school_no'];
+    $votes = Vote::where('school_no', '=', $school_no)->get();
+    if (!$votes->isEmpty())
+    {
+            foreach ($votes as $vote){
+            echo $vote->school_no, $vote->id, $vote->vote_title;
+//            if ($candidate_c <> null){
+//                $ary[1][$vote->id] = $candidate_c->vote_id;
+//            }
+//            else{
+//                $ary[1][$vote->id] = '沒有資料';
+//            }
+        }
+
+//        $err = "投票代號或籤號錯誤";
+        return View::make('tasks.vote_result_show_index', compact('votes'));
+    }
+    else
+    {
+        $err = "此學校代號無投票項目  或  學校代號錯誤";
+        return View::make('tasks.school_select', compact('err'));
+    }
+
+}));
+
+Route::get('/vote_result_show/{id}', array('as' => 'vote_result_show', function($id){
+//        $accounts = Account::where('vote_id', '=', $id)->get();
+//        $votes = Vote::where('id', '=', $id)->get();
+//        $school_no = $votes[0]->school_no;
+//        $vote_amount = $votes[0]->vote_amount;
+//        $redo = 0;
+//        $data = [$accounts,$school_no,$vote_amount,$redo];
+          $data_test = "test";
+        // return our view and Vote information
+        return View::make('tasks.vote_result_show',compact('data_test','id'));
+}));
+
 Route::get('/candidates_select_result/', array('as' => 'candidates_select_result', function()
 {
     $cadidates_checked = Input::get('candidate');
@@ -211,8 +259,49 @@ Route::get('/account_data_del/{id}', ['as' => 'account_data_del', 'uses' => 'Acc
 //          return View::make('tasks.vote-edit2', array('id' => $id,'s'=>$s,'vote'=>Vote::find($id)));
 //     }));
 
+Route::get('/test3', function()
+{
 
-Route::get('/test', function()
+    $vote = Vote::find(51);
+
+    $candidates = Candidate::where('vote_id', '=', 54)->get();
+    foreach ($candidates as $candidate){
+        $dump_d = Candidate::with('accounts')->find($candidate->id);
+        dd($dump_d);
+    }
+
+
+// $account = Account::find(1);
+// $candidate = Candidate::find(10);
+// $candidate->accounts()->detach();
+
+// // return $candidate->accounts;
+// return Candidate::with('accounts')->find($candidate->id);
+
+
+});
+
+
+Route::get('/test4', function() {
+
+    $vote = Vote::find(51);
+    $time2 = $vote->start_at;
+    $time3 = Carbon::now();
+
+
+
+    printf("Now: %s", $time2);
+    printf("Now: %s", $time3);
+    if ($time2>$time3)
+    {
+
+        echo ">";
+    }
+
+});
+
+
+    Route::get('/test', function()
 {
     // $artist = new Artist;
     // $artist->name = 'Eve 6';

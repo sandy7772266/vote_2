@@ -250,7 +250,7 @@ class VoteController extends \BaseController {
 		$candidates = Candidate::where('vote_id', '=', $id)->get();
 		foreach ($candidates as $candidate){
 			 $candidate->accounts()->detach();
-			$candidate->delete();
+			 $candidate->delete();
 		}
 		Account::where('vote_id', '=', $id)->delete();
 		$vote->delete();

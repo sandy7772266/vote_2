@@ -29,7 +29,7 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="http://10.231.87.225:81/new_vote_test/test2/public/">All Votes</a></li>
+						<li class="active"><a href="http://10.231.87.225:81/new_vote_test/test2/public/school_select">投票結果</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 					@if (Session::has('builder_name'))

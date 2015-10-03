@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a7c87bd3b09f3c0f0a4f1764ecf02ce2",
+    "hash": "89666696c044f31906f5defc6608d76d",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -454,7 +454,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://git.gitorious.org/lightopenid/lightopenid.git",
+                "url": "https://github.com/Mewp/lightopenid.git",
                 "reference": "9d42dc24e4dd34121c98a6491bc3ef7933a68a19"
             },
             "require": {
@@ -545,21 +545,21 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.18.0",
+            "version": "1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36"
+                "reference": "bfd3eaba109c9a2405c92174c8e17f20c2b9caf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36",
-                "reference": "99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bfd3eaba109c9a2405c92174c8e17f20c2b9caf3",
+                "reference": "bfd3eaba109c9a2405c92174c8e17f20c2b9caf3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "symfony/translation": "2.6.*"
+                "symfony/translation": "~2.6|~3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
@@ -588,7 +588,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2015-03-26 03:05:57"
+            "time": "2015-06-25 04:19:39"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -653,12 +653,12 @@
             "target-dir": "Symfony/Component/CssSelector",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/CssSelector.git",
+                "url": "https://github.com/symfony/css-selector.git",
                 "reference": "db2c48df9658423a8c168d89f7b971b73d3d74a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/CssSelector/zipball/db2c48df9658423a8c168d89f7b971b73d3d74a4",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/db2c48df9658423a8c168d89f7b971b73d3d74a4",
                 "reference": "db2c48df9658423a8c168d89f7b971b73d3d74a4",
                 "shasum": ""
             },

@@ -8,7 +8,11 @@
 		"laravel/framework": "4.2.*",
 		"maatwebsite/excel": "1.3.5",
 		"lightopenid/lightopenid": "dev-master"
+	 	 "nesbot/carbon": "~1.14"
 	},
+
+
+
 	"autoload": {
 		"classmap": [
 			"app/commands",
