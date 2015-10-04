@@ -7,18 +7,18 @@
 <div class="col-md-6">
 	
 	<ul class="list-group">
-{{$data_test}}  {{$id}}
-		{{--@foreach ($candidates as $candidate)--}}
-			{{--<li class="list-group-item">--}}
-				{{----}}
-				{{--{{$candidate->cname}}--}}
-				{{--{{$candidate->job_title}}--}}
-				{{--{{$candidate->sex}}--}}
+  {{$id}}
+		@foreach ($candidates as $candidate)
+			<li class="list-group-item">
 
-				{{--<br>--}}
-				{{----}}
-			{{--</li>--}}
-		{{--@endforeach--}}
+				{{$candidate->cname}}
+				{{$candidate->job_title}}
+				{{$candidate->sex}}
+
+				<br>
+
+			</li>
+		@endforeach
 	</ul>
 </div>
 

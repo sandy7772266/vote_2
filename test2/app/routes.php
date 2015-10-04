@@ -127,6 +127,7 @@ Route::get('/vote_result_show_index/', array('as' => 'vote_result_show_index', f
     $data = Input::all();
     $school_no = $data['school_no'];
     $votes = Vote::where('school_no', '=', $school_no)->get();
+    $time_now = Carbon::now();
     if (!$votes->isEmpty())
     {
             foreach ($votes as $vote){
@@ -140,7 +141,7 @@ Route::get('/vote_result_show_index/', array('as' => 'vote_result_show_index', f
         }
 
 //        $err = "投票代號或籤號錯誤";
-        return View::make('tasks.vote_result_show_index', compact('votes'));
+        return View::make('tasks.vote_result_show_index', compact('votes','time_now'));
     }
     else
     {
@@ -151,15 +152,17 @@ Route::get('/vote_result_show_index/', array('as' => 'vote_result_show_index', f
 }));
 
 Route::get('/vote_result_show/{id}', array('as' => 'vote_result_show', function($id){
-//        $accounts = Account::where('vote_id', '=', $id)->get();
-//        $votes = Vote::where('id', '=', $id)->get();
+          $candidates = Candidate::where('vote_id', '=', $id)->orderBy('total_count', 'desc')->get();
+//        $votes = Vote::where('school_no', '=', $id)->get();
 //        $school_no = $votes[0]->school_no;
 //        $vote_amount = $votes[0]->vote_amount;
 //        $redo = 0;
 //        $data = [$accounts,$school_no,$vote_amount,$redo];
-          $data_test = "test";
+          //$data_test = "test";
         // return our view and Vote information
-        return View::make('tasks.vote_result_show',compact('data_test','id'));
+
+
+    return View::make('tasks.vote_result_show',compact('candidates','id'));
 }));
 
 Route::get('/candidates_select_result/', array('as' => 'candidates_select_result', function()
