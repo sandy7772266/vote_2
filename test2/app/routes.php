@@ -64,6 +64,7 @@ Route::get('/{id}', array('as' => 'vote.edit', function($id)
 
 Route::get('/manage', array('as' => 'manage', function() 
     {
+        $time_now = Carbon::now();
         $votes = Vote::get();
         $ary[0] = $votes;
         foreach ($ary[0] as $vote){
@@ -77,7 +78,7 @@ Route::get('/manage', array('as' => 'manage', function()
             }
         }
         // return our view and Vote information
-        return View::make('tasks.vote-manage-index',compact('ary'));
+        return View::make('tasks.vote-manage-index',compact('ary','time_now'));
     }));
 
 Route::get('/candidate_data_show/{id}', array('as' => 'candidate_data_show', function($id) 
@@ -131,7 +132,7 @@ Route::get('/vote_result_show_index/', array('as' => 'vote_result_show_index', f
     if (!$votes->isEmpty())
     {
             foreach ($votes as $vote){
-            echo $vote->school_no, $vote->id, $vote->vote_title;
+           // echo $vote->school_no, $vote->id, $vote->vote_title;
 //            if ($candidate_c <> null){
 //                $ary[1][$vote->id] = $candidate_c->vote_id;
 //            }
@@ -165,6 +166,20 @@ Route::get('/vote_result_show/{id}', array('as' => 'vote_result_show', function(
     return View::make('tasks.vote_result_show',compact('candidates','id'));
 }));
 
+Route::get('/votes_from_whom/{id}', array('as' => 'votes_from_whom', function($id){
+    $accounts = Candidate::find($id)->accounts()->get();
+
+//        $votes = Vote::where('school_no', '=', $id)->get();
+//        $school_no = $votes[0]->school_no;
+//        $vote_amount = $votes[0]->vote_amount;
+//        $redo = 0;
+//        $data = [$accounts,$school_no,$vote_amount,$redo];
+    //$data_test = "test";
+    // return our view and Vote information
+
+
+    return View::make('tasks.votes_from_whom',compact('accounts'));
+}));
 Route::get('/candidates_select_result/', array('as' => 'candidates_select_result', function()
 {
     $cadidates_checked = Input::get('candidate');
@@ -192,13 +207,15 @@ Route::get('/account_data_show/{id}', array('as' => 'account_data_show', functio
     {
         $accounts = Account::where('vote_id', '=', $id)->get();
         $votes = Vote::where('id', '=', $id)->get();
+        $start_at = $votes[0]->start_at;
+        $end_at = $votes[0]->end_at;
         $school_no = $votes[0]->school_no;
         $vote_amount = $votes[0]->vote_amount;
         $redo = 0;
         $data = [$accounts,$school_no,$vote_amount,$redo];
 
         // return our view and Vote information
-        return View::make('tasks.account_data_show',compact('data'));
+        return View::make('tasks.account_data_show',compact('data','start_at','end_at'));
     }));
 
 Route::get('/account_data_redo/{id}', array('as' => 'account_data_redo', function($id) 

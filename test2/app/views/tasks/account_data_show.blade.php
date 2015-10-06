@@ -26,6 +26,9 @@
 				學校代號：{{$data[1]}}
 				投票代號：{{$account->vote_id}}
 				籤號：{{$account->username}}
+				起始時間：{{$start_at}}
+				結束時間：{{$end_at}}
+
 						<!--{{$account->finish_at}}
  -->
 

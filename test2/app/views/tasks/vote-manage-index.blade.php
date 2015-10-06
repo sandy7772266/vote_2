@@ -13,12 +13,19 @@
 	<a href="{{ url('/insert-first') }}"><strong>新增</strong></a>	                                               	
 	<ul class="list-group">
 
-	<?php 
-	Session::forget('redo');
-	
-	?>
-		@foreach ($ary[0] as $vote)
 		<?php
+		Session::forget('redo');
+		?>
+		@foreach ($ary[0] as $vote)
+
+			@if ( $time_now > $vote->end_at )
+				<td>投票已完成...<br><a href="{{ url('/vote_result_show', array($vote->id), false) }}"><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong></a><br>
+			@elseif ( $time_now > $vote->start_at)
+				<td >投票進行中...<br><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong><br>
+			@else
+				<td >尚未投票...<br><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong>
+
+<?php
 		$candidates = Candidate::where('vote_id', '=', $vote->id)->get();
 		$can_id = null;
 		if ( count($candidates) <> 0 ){
@@ -75,6 +82,7 @@
 				<input type="submit"  />
 				{{ Form::close() }} -->
 				</td>
+					@endif
 				</tr>
 				</table>
 			</li>
