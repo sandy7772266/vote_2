@@ -4,9 +4,12 @@
 
 
 @section('content')
-
+	可選數為 {{$can_select}}
 	{{ Form::open(['class' => 'form','method'=>'get','route'=>['candidates_select_result']]) }}
 		<div class="col-md-6">
+					@if ($err_msg)
+						{{$err_msg}}
+					@endif
 
 					<ul class="list-group">
 					@foreach ($candidates as $candidate)

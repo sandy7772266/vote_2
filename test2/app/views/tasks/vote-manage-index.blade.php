@@ -19,11 +19,19 @@
 		@foreach ($ary[0] as $vote)
 
 			@if ( $time_now > $vote->end_at )
-				<td>投票已完成...<br><a href="{{ url('/vote_result_show', array($vote->id), false) }}"><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong></a><br>
+				<td><br>投票已完成...<br><a href="{{ url('/vote_result_show', array($vote->id), false) }}"><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong></a><br>
+				</td>
 			@elseif ( $time_now > $vote->start_at)
-				<td >投票進行中...<br><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong><br>
+				<td ><br>投票進行中...
+					<a href="{{ url('/account_data_show', array($vote->id), false) }}"><strong>籤票內容</strong></a>
+
+					<br><a href="{{ url('/vote_result_show', array($vote->id), false) }}"><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong></a><br>
+					<br><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong><br>
+				</td>
+
+
 			@else
-				<td >尚未投票...<br><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong>
+				<td ><br>尚未投票...<br><strong>{{$vote->vote_title}}<br>now:{{$time_now}}<br>start:{{$vote->start_at}}end:{{$vote->end_at}}</strong>
 
 <?php
 		$candidates = Candidate::where('vote_id', '=', $vote->id)->get();
@@ -83,6 +91,7 @@
 				{{ Form::close() }} -->
 				</td>
 					@endif
+
 				</tr>
 				</table>
 			</li>

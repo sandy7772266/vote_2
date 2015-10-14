@@ -4,9 +4,9 @@
                       name="vote_title" /> 
                      <input type="text" class="form-control" placeholder="投票人數...." autofocus required
                        name="vote_amount" />
-                     <input type="text" class="form-control" placeholder="開始時間...." autofocus required
+                     <input type="text" class="form-control" placeholder="2015-10-15 12:00:00" autofocus required
                         name="start_at" /> 
-                     <input type="text" class="form-control" placeholder="結束時間...." autofocus required
+                     <input type="text" class="form-control" placeholder="2015-10-15 12:00:00" autofocus required
                          name="end_at" />
 
                      <input type="text" class="form-control" placeholder="當選人數...." autofocus required

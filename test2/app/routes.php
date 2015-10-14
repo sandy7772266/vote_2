@@ -107,8 +107,11 @@ Route::get('/candidates_select/', array('as' => 'candidates_select', function()
         $account_id = $account->id;
         Session::put('account_id', $account_id);
         $candidates = Candidate::where('vote_id', '=', $id)->get();
-
-        return View::make('tasks.candidate_select', compact('candidates', 'account_id'));
+        $vote = Vote::find(54)->get();
+       // dd($vote[0]->can_select);
+       $can_select = $vote[0]->can_select;
+        $err_msg = '';
+        return View::make('tasks.candidate_select', compact('candidates', 'account_id','can_select','err_msg'));
 
     } catch(ModelNotFoundException $e) {
         $err = "投票代號或籤號錯誤";
@@ -187,16 +190,28 @@ Route::get('/candidates_select_result/', array('as' => 'candidates_select_result
     {
         $account_id = Session::get('account_id', '這是預設值，沒設定過就用這個囉！！');
         echo $account_id;
+
        //dd('5');
         $account = Account::find($account_id);
-     foreach ($cadidates_checked as $candidate_id){
-         echo $candidate_id;
+        $vote = Vote::find($account->vote_id)->get();
+        if (count($cadidates_checked)>$vote[0]->can_select){
+            $can_select = $vote[0]->can_select;
+            $candidates = Candidate::where('vote_id', '=', $account->vote_id)->get();
+            $account_id = Session::get('account_id', '這是預設值，沒設定過就用這個囉！！');
+            $err_msg = '超過可選數目';
+            return View::make('tasks.candidate_select',compact('candidates', 'account_id','err_msg','can_select'));
+        }
+        else
+        {
+             foreach ($cadidates_checked as $candidate_id){
+                 echo $candidate_id;
 
-         $candidate = Candidate::find($candidate_id);
-         $candidate->accounts()->save($account);
-         $candidate->total_count ++;
-         $candidate->save();
-     }
+                 $candidate = Candidate::find($candidate_id);
+                 $candidate->accounts()->save($account);
+                 $candidate->total_count ++;
+                 $candidate->save();
+             }
+        }
         //echo $account_id;
     }
     // return our view and Vote information
