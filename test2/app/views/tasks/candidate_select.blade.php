@@ -4,7 +4,7 @@
 
 
 @section('content')
-	¥i¿ï¼Æ¬° {{$can_select}}
+	ç¥¨æ•¸é™åˆ¶ï¼š {{$can_select}}
 	{{ Form::open(['class' => 'form','method'=>'get','route'=>['candidates_select_result']]) }}
 		<div class="col-md-6">
 					@if ($err_msg)

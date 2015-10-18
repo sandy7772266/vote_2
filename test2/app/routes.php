@@ -105,12 +105,21 @@ Route::get('/candidates_select/', array('as' => 'candidates_select', function()
     try {
         $account = Account::where('vote_id', '=', $data['vote_id'])->where('username', '=', $data['account'])->firstorfail();
         $account_id = $account->id;
-        Session::put('account_id', $account_id);
-        $candidates = Candidate::where('vote_id', '=', $id)->get();
-        $vote = Vote::find(54)->get();
+        $candidates = $account->candidates()->get();
+
+        if (!$candidates->isEmpty())
+        {
+            $err = "此籤號已於" . $candidates[0]->updated_at . "投票";
+            return View::make('tasks.index2', compact('votes','err'));
+        }
+///////
+        $vote_id = $id;
+        $vote = Vote::find($vote_id)->get();
        // dd($vote[0]->can_select);
        $can_select = $vote[0]->can_select;
         $err_msg = '';
+        Session::put('account_id', $account_id);
+        $candidates = Candidate::where('vote_id', '=', $id)->get();
         return View::make('tasks.candidate_select', compact('candidates', 'account_id','can_select','err_msg'));
 
     } catch(ModelNotFoundException $e) {
@@ -227,10 +236,10 @@ Route::get('/account_data_show/{id}', array('as' => 'account_data_show', functio
         $school_no = $votes[0]->school_no;
         $vote_amount = $votes[0]->vote_amount;
         $redo = 0;
-        $data = [$accounts,$school_no,$vote_amount,$redo];
+        $data = [$accounts,$school_no,$vote_amount,$redo,$start_at,$end_at];
 
         // return our view and Vote information
-        return View::make('tasks.account_data_show',compact('data','start_at','end_at'));
+        return View::make('tasks.account_data_show',compact('data'));
     }));
 
 Route::get('/account_data_redo/{id}', array('as' => 'account_data_redo', function($id) 
@@ -238,9 +247,11 @@ Route::get('/account_data_redo/{id}', array('as' => 'account_data_redo', functio
         $accounts = Account::where('vote_id', '=', $id)->get();
         $votes = Vote::where('id', '=', $id)->get();
         $school_no = $votes[0]->school_no;
+        $start_at = $votes[0]->start_at;
+        $end_at = $votes[0]->end_at;
         $vote_amount = $votes[0]->vote_amount;
         $redo = 1;
-        $data = [$accounts,$school_no,$vote_amount,$redo];
+        $data = [$accounts,$school_no,$vote_amount,$redo,$start_at,$end_at];
         
         $vote_data=[$id,$vote_amount];
         //$redo = 1;
