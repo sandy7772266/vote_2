@@ -113,14 +113,30 @@ Route::get('/candidates_select/', array('as' => 'candidates_select', function()
             return View::make('tasks.index2', compact('votes','err'));
         }
 ///////
-        $vote_id = $id;
-        $vote = Vote::find($vote_id)->get();
+        $vote_id =$data['vote_id'];
+        $vote = Vote::find($vote_id);
+       //dd($vote);
+        $time_now = Carbon::now();
+        if ($vote->start_at > $time_now)
+        {
+            $err = '此投票活動尚未開始';
+            return View::make('tasks.index2', compact('votes','err'));
+        }
+        elseif  ($vote->end_at < $time_now)
+        {
+            //dd($vote[0]->end_at,'ooo',$time_now,'ppp',$vote_id);
+            $err = '此投票活動已經結束';
+            return View::make('tasks.index2', compact('votes','err'));
+        }
+        else
+        {
        // dd($vote[0]->can_select);
-       $can_select = $vote[0]->can_select;
+       $can_select = $vote->can_select;
         $err_msg = '';
         Session::put('account_id', $account_id);
         $candidates = Candidate::where('vote_id', '=', $id)->get();
         return View::make('tasks.candidate_select', compact('candidates', 'account_id','can_select','err_msg'));
+        }
 
     } catch(ModelNotFoundException $e) {
         $err = "投票代號或籤號錯誤";
@@ -198,7 +214,7 @@ Route::get('/candidates_select_result/', array('as' => 'candidates_select_result
     if(is_array($cadidates_checked))
     {
         $account_id = Session::get('account_id', '這是預設值，沒設定過就用這個囉！！');
-        echo $account_id;
+        //echo $account_id;
 
        //dd('5');
         $account = Account::find($account_id);
@@ -210,12 +226,13 @@ Route::get('/candidates_select_result/', array('as' => 'candidates_select_result
             $err_msg = '超過可選數目';
             return View::make('tasks.candidate_select',compact('candidates', 'account_id','err_msg','can_select'));
         }
-        else
+        else//再一次判斷是否投過票了！*************
         {
+            echo "投票完成！<br>您選擇的是：<br>";
              foreach ($cadidates_checked as $candidate_id){
-                 echo $candidate_id;
-
                  $candidate = Candidate::find($candidate_id);
+                 echo ($candidate->cname);
+                 echo "<br>";
                  $candidate->accounts()->save($account);
                  $candidate->total_count ++;
                  $candidate->save();
