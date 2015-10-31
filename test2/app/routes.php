@@ -218,9 +218,9 @@ Route::get('/candidates_select_result/', array('as' => 'candidates_select_result
 
        //dd('5');
         $account = Account::find($account_id);
-        $vote = Vote::find($account->vote_id)->get();
-        if (count($cadidates_checked)>$vote[0]->can_select){
-            $can_select = $vote[0]->can_select;
+        $vote = Vote::find($account->vote_id);
+        if (count($cadidates_checked)>$vote->can_select){
+            $can_select = $vote->can_select;
             $candidates = Candidate::where('vote_id', '=', $account->vote_id)->get();
             $account_id = Session::get('account_id', '這是預設值，沒設定過就用這個囉！！');
             $err_msg = '超過可選數目';
